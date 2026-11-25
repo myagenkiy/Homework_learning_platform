@@ -45,11 +45,15 @@ public class CourseService {
     }
 
     @Transactional(readOnly = true)
-    public List<Module> getModulesOfCourse(Long courseId) {
+    public List<ModuleDto> getModulesOfCourse(Long courseId) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new IllegalArgumentException("Курс не найден: " + courseId));
-        return course.getModules();
+        return course.getModules().stream()
+                .map(m -> new ModuleDto(m.getId(), m.getTitle(), m.getOrderIndex()))
+                .toList();
     }
+
+    public record ModuleDto(Long id, String title, Integer orderIndex) {}
 
     @Transactional
     public Module addModule(Long courseId, String title, Integer orderIndex) {

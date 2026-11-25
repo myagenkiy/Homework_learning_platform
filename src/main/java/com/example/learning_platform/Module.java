@@ -22,6 +22,9 @@ public class Module {
     @OneToMany(mappedBy = "module", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<>();
 
+    @OneToOne(mappedBy = "module", fetch = FetchType.LAZY)
+    private Quiz quiz;
+
     public Module() {
     }
 
@@ -30,7 +33,6 @@ public class Module {
         this.orderIndex = orderIndex;
     }
 
-    // геттеры и сеттеры
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getTitle() { return title; }
@@ -41,4 +43,6 @@ public class Module {
     public void setCourse(Course course) { this.course = course; }
     public List<Lesson> getLessons() { return lessons; }
     public void setLessons(List<Lesson> lessons) { this.lessons = lessons; }
+    public Quiz getQuiz() { return quiz; }
+    public void setQuiz(Quiz quiz) { this.quiz = quiz; }
 }
